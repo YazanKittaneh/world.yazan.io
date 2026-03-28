@@ -161,6 +161,16 @@ onMounted(async () => {
     specular: new THREE.Color(0x222222)
   })
 
+  const arcsData = [
+    {
+      startLat: -25.2744,
+      startLng: 133.7751,
+      endLat: 32.4279,
+      endLng: 53.6880,
+      color: '#ff2222'
+    }
+  ]
+
   const globe = new ThreeGlobe({ waitForGlobeReady: false })
     .globeMaterial(globeMat)
     .showAtmosphere(true)
@@ -168,9 +178,23 @@ onMounted(async () => {
     .atmosphereAltitude(globeConfig.atmosphereAltitude)
     .polygonsData(polygonFeatures)
     .polygonAltitude(() => globeConfig.polygonAltitude)
-    .polygonCapColor(() => globeConfig.polygonCapColor)
+    .polygonCapColor((d) => {
+      const iso = (d as CountryFeature).properties?.ISO_A2
+      return iso === 'AU' || iso === 'IR' ? 'rgba(255,40,40,0.55)' : globeConfig.polygonCapColor
+    })
     .polygonSideColor(() => globeConfig.polygonSideColor)
     .polygonStrokeColor(() => globeConfig.polygonStrokeColor)
+    .arcsData(arcsData)
+    .arcStartLat('startLat')
+    .arcStartLng('startLng')
+    .arcEndLat('endLat')
+    .arcEndLng('endLng')
+    .arcColor('color')
+    .arcAltitude(0.3)
+    .arcStroke(0.5)
+    .arcDashLength(0.4)
+    .arcDashGap(0.2)
+    .arcDashAnimateTime(2000)
 
   globe.rotation.y = -Math.PI / 2
   globeObject = globe
