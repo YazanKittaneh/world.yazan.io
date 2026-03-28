@@ -1,0 +1,86 @@
+{
+  "hero": {
+    "eyebrow": "Las Vegas media spectacle system",
+    "titleTop": "SURROUNDING LAS",
+    "titleBottom": "ICONIC DESTINATIONS",
+    "summary": "A cinematic first-pass recreation of WOW Media's immersive homepage language, rebuilt in Nuxt 3 with fixture-backed content, bold editorial typography, and a live 3D hero scene.",
+    "ctaLabel": "Enter the network",
+    "ctaTarget": "#capabilities",
+    "kicker": "Out-of-home media, reimagined as destination-scale presence.",
+    "metrics": [
+      {
+        "label": "Signature formats",
+        "value": "84"
+      },
+      {
+        "label": "Corridor reach",
+        "value": "24/7"
+      },
+      {
+        "label": "Audience intensity",
+        "value": "Tier-1"
+      }
+    ]
+  },
+  "statements": [
+    {
+      "overline": "Built to dominate arrival",
+      "title": "When the environment becomes the media plan, every glance turns into momentum.",
+      "body": "The reference site treats scale, atmosphere, and placement as the product. This demo mirrors that pacing with compressed messaging, oversized contrast, and wide dark surfaces."
+    },
+    {
+      "overline": "The city as interface",
+      "title": "Blue-lit systems, sculptural motion, and full-bleed storytelling shape the brand experience.",
+      "body": "Instead of a conventional grid-led agency site, the composition feels like a controlled environment. The recreated sections keep that feeling while using a manageable local component system."
+    }
+  ],
+  "capabilities": [
+    {
+      "title": "Spectacular Domes",
+      "description": "Hero-scale placements shaped as landmarks rather than units, presented with immersive motion and nighttime atmosphere.",
+      "accent": "#4df06d",
+      "tag": "01"
+    },
+    {
+      "title": "Corridor Networks",
+      "description": "Sequenced inventory across high-intensity movement paths, translated here into modular content and active media state.",
+      "accent": "#8bb1ff",
+      "tag": "02"
+    },
+    {
+      "title": "Moments of Arrival",
+      "description": "High-contrast placements that frame anticipation, tuned for premium brands that need more than passive visibility.",
+      "accent": "#f6efe6",
+      "tag": "03"
+    }
+  ],
+  "featuredMedia": [
+    {
+      "title": "EON Dome",
+      "subtitle": "Immersive district anchor",
+      "detail": "A luminous centerpiece with slow orbital motion and deep blue bloom, used here as the hero's visual metaphor.",
+      "accent": "#0247fe",
+      "indexLabel": "01"
+    },
+    {
+      "title": "Ribbon Boards",
+      "subtitle": "Directional city framing",
+      "detail": "Continuous surfaces with linked state transitions, represented in the media rail as the active content sequence.",
+      "accent": "#4df06d",
+      "indexLabel": "02"
+    },
+    {
+      "title": "Arrival Screens",
+      "subtitle": "Precision at scale",
+      "detail": "A sharper, denser moment in the page rhythm where information resolves into a premium contact point.",
+      "accent": "#8bb1ff",
+      "indexLabel": "03"
+    }
+  ],
+  "contact": {
+    "title": "Make the city feel booked.",
+    "body": "This demo stays focused on the first impression: a cinematic dark interface, bold type, strong blue accents, and a modular architecture ready for real CMS content later.",
+    "email": "demo@wowmedia.local",
+    "location": "Las Vegas, Nevada"
+  }
+}

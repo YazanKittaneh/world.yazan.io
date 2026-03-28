@@ -1,0 +1,90 @@
+:root {
+  color-scheme: dark;
+  --color-bg: #111111;
+  --color-surface: #131722;
+  --color-surface-strong: #0e1119;
+  --color-text: #f4f7ff;
+  --color-text-muted: rgba(244, 247, 255, 0.72);
+  --color-accent: #0247fe;
+  --color-accent-soft: #56ef6f;
+  --color-line: rgba(255, 255, 255, 0.12);
+  --font-display: "druk-medium", "Arial Black", "Helvetica Neue", sans-serif;
+  --font-sans-light: "planar-light", "Helvetica Neue", Arial, sans-serif;
+  --font-sans-regular: "planar-regular", "Helvetica Neue", Arial, sans-serif;
+  --font-sans-bold: "planar-bold", "Helvetica Neue", Arial, sans-serif;
+  --layout-gutter: clamp(1.1rem, 2vw, 2rem);
+  --layout-width: min(100% - (var(--layout-gutter) * 2), 1380px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-bg);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top, rgba(2, 71, 254, 0.18), transparent 22%),
+    linear-gradient(180deg, #101114 0%, #090a0d 100%);
+  color: var(--color-text);
+  font-family: var(--font-sans-regular);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 120px 120px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 78%);
+  opacity: 0.28;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.layout-shell {
+  width: var(--layout-width);
+  margin: 0 auto;
+}
+
+.section-panel {
+  position: relative;
+  overflow: clip;
+  border: 1px solid var(--color-line);
+  border-radius: 2rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
+    rgba(15, 18, 26, 0.82);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.22);
+}
+
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity 240ms ease;
+}
+
+.page-fade-enter-from,
+.page-fade-leave-to {
+  opacity: 0;
+}
