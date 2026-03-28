@@ -2,6 +2,7 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import type { CityConfig } from '~/composables/cityConfig'
 
@@ -44,7 +45,8 @@ const loadCityModel = () => {
   if (!props.city) return
   
   const loader = new GLTFLoader()
-  
+  loader.setMeshoptDecoder(MeshoptDecoder)
+
   const dracoLoader = new DRACOLoader()
   dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
   loader.setDRACOLoader(dracoLoader)

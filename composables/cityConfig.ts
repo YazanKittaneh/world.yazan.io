@@ -25,7 +25,7 @@ export const cities: Record<string, CityConfig> = {
   losAngeles: {
     id: 'losAngeles',
     name: 'Los Angeles',
-    modelUrl: '/gltf/MAP_V5.gltf',
+    modelUrl: '/gltf/MAP_V5.glb',
     camera: {
       position: [52, 42, 52],
       target: [0, 5, 0],

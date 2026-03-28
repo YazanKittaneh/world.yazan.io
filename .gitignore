@@ -32,9 +32,14 @@ osm2world.sh
 osm2world-windows.bat
 standard.properties
 
-# Large 3D assets — too big for git (GLTF city model + textures are 450MB+)
-# Host these separately (S3, R2, etc.) and reference via URL or .env
-public/gltf/
+# Large 3D assets — raw source GLTF + textures (450 MB+), not committed
+# Compressed GLB files (< 5 MB) are committed and tracked normally
+public/gltf/*.gltf
+public/gltf/*.bin
+public/gltf/*.jpg
+public/gltf/*.png
+public/gltf/chicago/
+public/gltf/nyc/
 
 # OSM2World texture/resource libraries (350MB+)
 textures/
