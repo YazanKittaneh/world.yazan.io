@@ -9,6 +9,13 @@ watch(currentIndex, async () => {
   await nextTick()
   setTimeout(() => { visible.value = true }, 50)
 })
+
+// Swipe handling for mobile
+const { onTouchStart, onTouchEnd } = useSwipe({
+  threshold: 50,
+  onSwipeLeft: () => storyStore.nextScene(),
+  onSwipeRight: () => storyStore.prevScene()
+})
 </script>
 
 <template>
@@ -17,12 +24,18 @@ watch(currentIndex, async () => {
       v-if="currentScene"
       class="narration-overlay"
       :key="currentIndex"
+      @touchstart="onTouchStart"
+      @touchend="onTouchEnd"
     >
+      <p v-if="currentScene.sceneTitle" class="scene-title">{{ currentScene.sceneTitle }}</p>
       <p class="narration-text">{{ currentScene.narration }}</p>
       <div class="narration-footer">
         <span class="scene-counter">{{ currentIndex + 1 }} / {{ totalScenes }}</span>
-        <span class="nav-hints">
+        <span class="nav-hints nav-hints--desktop">
           <kbd>←</kbd> prev &nbsp; <kbd>→</kbd> next
+        </span>
+        <span class="nav-hints nav-hints--mobile">
+          ← swipe →
         </span>
       </div>
     </div>
@@ -43,7 +56,23 @@ watch(currentIndex, async () => {
   border-radius: 16px;
   backdrop-filter: blur(16px);
   color: #fff;
-  pointer-events: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+}
+
+.narration-overlay:active {
+  cursor: grabbing;
+}
+
+.scene-title {
+  margin: 0 0 6px;
+  font-size: clamp(0.75rem, 1.4vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .narration-text {
@@ -73,6 +102,19 @@ watch(currentIndex, async () => {
   border-radius: 4px;
   font-family: inherit;
   font-size: 11px;
+}
+
+.nav-hints--mobile {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .nav-hints--desktop {
+    display: none;
+  }
+  .nav-hints--mobile {
+    display: inline;
+  }
 }
 
 /* Crossfade transition */
