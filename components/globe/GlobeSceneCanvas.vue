@@ -29,6 +29,7 @@ let globeInstance: any = null
 // Camera animation state
 const targetCamPos = new THREE.Vector3(0, 0, 260)
 let targetFov = globeConfig.cameraFov
+let targetDist = 260  // lerped independently so zoom can change smoothly
 let isAnimatingCamera = false
 
 const polygonFeatures = (countries.features as CountryFeature[]).filter(
@@ -50,9 +51,23 @@ function animateCameraToScene() {
   if (!camera || !currentScene.value) return
   const sc = currentScene.value
 
+  // Camera override: LLM-specified lat/lng/distance bypasses auto-framing
+  if (sc.camera) {
+    const dir = latLngToWorldDir(sc.camera.lat, sc.camera.lng)
+    targetDist = sc.camera.distance ?? camera.position.length()
+    targetCamPos.copy(dir).multiplyScalar(targetDist)
+    targetFov = globeConfig.cameraFov
+    isAnimatingCamera = true
+    return
+  }
+
   const isoSet = new Set<string>()
   for (const h of sc.highlights ?? []) isoSet.add(h.iso)
-  for (const a of sc.arcs ?? []) { isoSet.add(a.from); isoSet.add(a.to) }
+  for (const a of sc.arcs ?? []) {
+    isoSet.add(a.from)
+    isoSet.add(a.to)
+    for (const wp of a.waypoints ?? []) isoSet.add(wp)
+  }
   if (isoSet.size === 0) return
 
   const dirs: THREE.Vector3[] = []
@@ -62,10 +77,21 @@ function animateCameraToScene() {
   }
   if (dirs.length === 0) return
 
-  // Spherical centroid: average unit vectors then normalize
-  const centroid = new THREE.Vector3()
+  // Spherical centroid with antipodal handling
+  // When countries span >180°, vector average cancels out and points wrong way
+  let centroid = new THREE.Vector3()
   for (const d of dirs) centroid.add(d)
   centroid.normalize()
+
+  // Check if centroid is reasonable (majority of points should be within 90°)
+  let closeCount = 0
+  for (const d of dirs) {
+    if (centroid.dot(d) > 0) closeCount++ // Within 90°
+  }
+  // If centroid is wrong, flip it
+  if (closeCount < dirs.length / 2) {
+    centroid.negate()
+  }
 
   // Max angular spread from centroid to any country
   let maxAngle = 0
@@ -78,8 +104,8 @@ function animateCameraToScene() {
   const spreadDeg = maxAngle * THREE.MathUtils.RAD2DEG
   targetFov = Math.min(65, Math.max(globeConfig.cameraFov, globeConfig.cameraFov + (spreadDeg - 30) * 0.4))
 
-  const dist = camera.position.length()
-  targetCamPos.copy(centroid).multiplyScalar(dist)
+  targetDist = camera.position.length()
+  targetCamPos.copy(centroid).multiplyScalar(targetDist)
   isAnimatingCamera = true
 }
 
@@ -258,10 +284,10 @@ onMounted(async () => {
     .arcEndLng('endLng')
     .arcColor('color')
     .arcAltitude(0.3)
-    .arcStroke(0.5)
-    .arcDashLength(0.4)
-    .arcDashGap(0.2)
-    .arcDashAnimateTime(2000)
+    .arcStroke((d: any) => d.stroke ?? 0.5)
+    .arcDashLength((d: any) => d.dashLength ?? 0.4)
+    .arcDashGap((d: any) => d.dashGap ?? 0.2)
+    .arcDashAnimateTime((d: any) => d.animateTime ?? 2000)
 
   globe.rotation.y = -Math.PI / 2
   globeObject = globe
@@ -274,19 +300,42 @@ onMounted(async () => {
 
     const sc = currentScene.value
 
-    // Update arcs
-    const arcsData = (sc?.arcs ?? []).map(arc => {
-      const from = countryCenters.get(arc.from)
-      const to = countryCenters.get(arc.to)
-      if (!from || !to) return null
-      return {
-        startLat: from.lat,
-        startLng: from.lng,
-        endLat: to.lat,
-        endLng: to.lng,
-        color: arc.color
+    // Update arcs - handle waypoints by creating multiple segments
+    const arcsData: any[] = []
+    for (const arc of sc?.arcs ?? []) {
+      const waypoints = arc.waypoints ?? []
+      const hops = [arc.from, ...waypoints, arc.to]
+      
+      // Convert style to dash parameters
+      let dashLength = 0.4
+      let dashGap = 0.2
+      if (arc.style === 'solid') {
+        dashLength = 1
+        dashGap = 0
+      } else if (arc.style === 'dotted') {
+        dashLength = 0.1
+        dashGap = 0.3
       }
-    }).filter(Boolean)
+      
+      for (let i = 0; i < hops.length - 1; i++) {
+        const from = countryCenters.get(hops[i])
+        const to = countryCenters.get(hops[i + 1])
+        if (!from || !to) continue
+        
+        arcsData.push({
+          startLat: from.lat,
+          startLng: from.lng,
+          endLat: to.lat,
+          endLng: to.lng,
+          color: arc.color,
+          stroke: (arc.thickness ?? 1) * 0.5,
+          dashLength,
+          dashGap,
+          animateTime: arc.speed ?? 2000,
+          label: arc.label
+        })
+      }
+    }
 
     globeInstance.arcsData(arcsData)
 
