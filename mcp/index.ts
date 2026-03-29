@@ -65,7 +65,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     {
       name: 'tell_story',
       description:
-        'Load a visual story onto the globe. Each scene shows narration text alongside globe effects (arcs between countries, highlighted countries). The user advances manually with arrow keys.',
+        'Load a visual story onto the globe. Each scene shows narration text alongside globe effects (arcs between countries, highlighted countries). The user advances manually with arrow keys (left/right) or by swiping on the narration card on mobile.',
       inputSchema: TELL_STORY_SCHEMA
     }
   ]
