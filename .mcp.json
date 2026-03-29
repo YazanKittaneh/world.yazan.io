@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "globe-story": {
+      "command": "node",
+      "args": ["mcp/dist/index.js"],
+      "cwd": "/Users/yazankittaneh/code/Career/blog.yazan.io/wowmedia-demo"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import countries from '~/data/globe/countries.geo.json'
 import { globeConfig } from '~/composables/globeConfig'
+import { useCountryCenters } from '~/composables/useCountryCenters'
 
 type CountryFeature = {
   properties?: {
@@ -13,6 +14,9 @@ type CountryFeature = {
 }
 
 const containerRef = ref<HTMLElement | null>(null)
+const storyStore = useStoryStore()
+const { currentScene } = storeToRefs(storyStore)
+const countryCenters = useCountryCenters()
 
 let renderer: THREE.WebGLRenderer | null = null
 let scene: THREE.Scene | null = null
@@ -20,14 +24,82 @@ let camera: THREE.PerspectiveCamera | null = null
 let controls: OrbitControls | null = null
 let frameId = 0
 let globeObject: THREE.Object3D | null = null
+let globeInstance: any = null
+
+// Camera animation state
+const targetCamPos = new THREE.Vector3(0, 0, 260)
+let targetFov = globeConfig.cameraFov
+let isAnimatingCamera = false
 
 const polygonFeatures = (countries.features as CountryFeature[]).filter(
   country => country.properties?.ISO_A2 !== 'AQ' && country.properties?.NAME !== 'Antarctica'
 )
 
+// Convert lat/lng to a world-space unit direction, accounting for globe.rotation.y = -PI/2
+// R_y(-PI/2) maps local (lx, ly, lz) → world (-lz, ly, lx)
+function latLngToWorldDir(lat: number, lng: number): THREE.Vector3 {
+  const latR = lat * THREE.MathUtils.DEG2RAD
+  const lngR = lng * THREE.MathUtils.DEG2RAD
+  const lx = Math.cos(latR) * Math.cos(lngR)
+  const ly = Math.sin(latR)
+  const lz = Math.cos(latR) * Math.sin(lngR)
+  return new THREE.Vector3(-lz, ly, lx)
+}
+
+function animateCameraToScene() {
+  if (!camera || !currentScene.value) return
+  const sc = currentScene.value
+
+  const isoSet = new Set<string>()
+  for (const h of sc.highlights ?? []) isoSet.add(h.iso)
+  for (const a of sc.arcs ?? []) { isoSet.add(a.from); isoSet.add(a.to) }
+  if (isoSet.size === 0) return
+
+  const dirs: THREE.Vector3[] = []
+  for (const iso of isoSet) {
+    const c = countryCenters.get(iso)
+    if (c) dirs.push(latLngToWorldDir(c.lat, c.lng))
+  }
+  if (dirs.length === 0) return
+
+  // Spherical centroid: average unit vectors then normalize
+  const centroid = new THREE.Vector3()
+  for (const d of dirs) centroid.add(d)
+  centroid.normalize()
+
+  // Max angular spread from centroid to any country
+  let maxAngle = 0
+  for (const d of dirs) {
+    const angle = Math.acos(Math.max(-1, Math.min(1, centroid.dot(d))))
+    if (angle > maxAngle) maxAngle = angle
+  }
+
+  // Widen FOV for distant country pairs (spread > 30° starts expanding)
+  const spreadDeg = maxAngle * THREE.MathUtils.RAD2DEG
+  targetFov = Math.min(65, Math.max(globeConfig.cameraFov, globeConfig.cameraFov + (spreadDeg - 30) * 0.4))
+
+  const dist = camera.position.length()
+  targetCamPos.copy(centroid).multiplyScalar(dist)
+  isAnimatingCamera = true
+}
+
 const renderScene = () => {
-  if (!renderer || !scene || !camera) {
-    return
+  if (!renderer || !scene || !camera) return
+
+  if (isAnimatingCamera) {
+    const dist = camera.position.length()
+    camera.position.lerp(targetCamPos, 0.055)
+    camera.position.setLength(dist) // preserve zoom level
+
+    camera.fov = THREE.MathUtils.lerp(camera.fov, targetFov, 0.055)
+    camera.updateProjectionMatrix()
+
+    if (camera.position.distanceTo(targetCamPos) < 5 && Math.abs(camera.fov - targetFov) < 0.3) {
+      camera.position.copy(targetCamPos)
+      camera.fov = targetFov
+      camera.updateProjectionMatrix()
+      isAnimatingCamera = false
+    }
   }
 
   controls?.update()
@@ -161,16 +233,6 @@ onMounted(async () => {
     specular: new THREE.Color(0x222222)
   })
 
-  const arcsData = [
-    {
-      startLat: -25.2744,
-      startLng: 133.7751,
-      endLat: 32.4279,
-      endLng: 53.6880,
-      color: '#ff2222'
-    }
-  ]
-
   const globe = new ThreeGlobe({ waitForGlobeReady: false })
     .globeMaterial(globeMat)
     .showAtmosphere(true)
@@ -178,13 +240,18 @@ onMounted(async () => {
     .atmosphereAltitude(globeConfig.atmosphereAltitude)
     .polygonsData(polygonFeatures)
     .polygonAltitude(() => globeConfig.polygonAltitude)
-    .polygonCapColor((d) => {
-      const iso = (d as CountryFeature).properties?.ISO_A2
-      return iso === 'AU' || iso === 'IR' ? 'rgba(255,40,40,0.55)' : globeConfig.polygonCapColor
+    .polygonCapColor((d: CountryFeature) => {
+      const iso = d.properties?.ISO_A2
+      const scene = currentScene.value
+      if (iso && scene?.highlights) {
+        const match = scene.highlights.find(h => h.iso === iso)
+        if (match) return match.color
+      }
+      return globeConfig.polygonCapColor
     })
     .polygonSideColor(() => globeConfig.polygonSideColor)
     .polygonStrokeColor(() => globeConfig.polygonStrokeColor)
-    .arcsData(arcsData)
+    .arcsData([])
     .arcStartLat('startLat')
     .arcStartLng('startLng')
     .arcEndLat('endLat')
@@ -198,7 +265,37 @@ onMounted(async () => {
 
   globe.rotation.y = -Math.PI / 2
   globeObject = globe
+  globeInstance = globe
   scene.add(globe)
+
+  // React to story scene changes
+  watchEffect(() => {
+    if (!globeInstance) return
+
+    const sc = currentScene.value
+
+    // Update arcs
+    const arcsData = (sc?.arcs ?? []).map(arc => {
+      const from = countryCenters.get(arc.from)
+      const to = countryCenters.get(arc.to)
+      if (!from || !to) return null
+      return {
+        startLat: from.lat,
+        startLng: from.lng,
+        endLat: to.lat,
+        endLng: to.lng,
+        color: arc.color
+      }
+    }).filter(Boolean)
+
+    globeInstance.arcsData(arcsData)
+
+    // Re-render polygons to pick up new highlight colors
+    globeInstance.polygonsData([...polygonFeatures])
+
+    // Animate camera to center on the scene's countries
+    animateCameraToScene()
+  })
 
   resizeScene()
   window.addEventListener('resize', resizeScene)

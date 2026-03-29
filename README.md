@@ -300,6 +300,63 @@ If the request is about why something on wowmedia.com behaves differently, assum
 3. the visible thing is texture/material-driven, not geometry-driven
 4. the current demo is intentionally simpler than the live site
 
+## Globe Storytelling Engine (MCP)
+
+The globe at `/globe` is controllable by an LLM via a local MCP server. Stories are sequences of scenes — each with narration text, country highlights, and animated arcs between countries.
+
+### Architecture
+
+```
+Claude (MCP client)
+  └─ tell_story tool call
+       └─ mcp/dist/index.js  (stdio MCP server)
+            └─ writes  public/story/current.json
+                 └─ GlobeSceneCanvas.vue polls every 3s
+                      └─ renders scenes reactively
+```
+
+The globe polls `public/story/current.json` every 3 seconds. When a new story appears, it loads the first scene. The user advances scenes with **→ / Space** and goes back with **←**.
+
+### MCP server setup
+
+The server is pre-configured in `.claude/settings.json`. On each Claude Code session start, the `globe-story` MCP server launches automatically.
+
+To rebuild after changes:
+
+```bash
+cd mcp && pnpm build
+```
+
+The compiled output is `mcp/dist/index.js`.
+
+### `tell_story` tool schema
+
+```ts
+{
+  title?: string
+  scenes: Array<{
+    narration: string                              // text shown on screen
+    highlights?: Array<{ iso: string; color: string }>  // ISO 3166-1 alpha-2
+    arcs?: Array<{ from: string; to: string; color: string }>
+  }>
+}
+```
+
+### Example stories
+
+- **Haitian Revolution (1791–1804)** — 10 scenes tracing slavery routes from West Africa → Saint-Domingue, the uprising, Toussaint Louverture, Napoleon's defeat, and Haiti's independence as the first Black republic
+- See `public/story/current.json` for the current loaded story
+
+### Why the MCP tool doesn't appear in a session
+
+Claude Code connects to MCP servers at **session startup only**. If `.claude/settings.json` was added after the session started, restart Claude Code — `mcp__globe_story__tell_story` will appear as an available tool on the next session.
+
+If the dist is missing, build it first:
+
+```bash
+cd mcp && pnpm build
+```
+
 ## Suggested next work
 
 - Add camera-facing behavior only for true label objects
