@@ -228,9 +228,7 @@ const renderScene = () => {
   if (!renderer || !scene || !camera) return
 
   if (isAnimatingCamera) {
-    const dist = camera.position.length()
     camera.position.lerp(targetCamPos, 0.055)
-    camera.position.setLength(dist) // preserve zoom level
 
     camera.fov = THREE.MathUtils.lerp(camera.fov, targetFov, 0.055)
     camera.updateProjectionMatrix()
