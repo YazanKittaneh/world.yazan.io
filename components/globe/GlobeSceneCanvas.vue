@@ -38,12 +38,13 @@ const polygonFeatures = (countries.features as CountryFeature[]).filter(
 
 // Convert lat/lng to a world-space unit direction, accounting for globe.rotation.y = -PI/2
 // R_y(-PI/2) maps local (lx, ly, lz) → world (-lz, ly, lx)
+// Note: three-globe uses (sin lng, cos lng) convention instead of (cos lng, sin lng)
 function latLngToWorldDir(lat: number, lng: number): THREE.Vector3 {
   const latR = lat * THREE.MathUtils.DEG2RAD
   const lngR = lng * THREE.MathUtils.DEG2RAD
-  const lx = Math.cos(latR) * Math.cos(lngR)
+  const lx = Math.cos(latR) * Math.sin(lngR)
   const ly = Math.sin(latR)
-  const lz = Math.cos(latR) * Math.sin(lngR)
+  const lz = Math.cos(latR) * Math.cos(lngR)
   return new THREE.Vector3(-lz, ly, lx)
 }
 
