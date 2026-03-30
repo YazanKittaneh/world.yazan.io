@@ -49,8 +49,12 @@ If you are modifying the 3D viewer, start here:
 - `components/globe/GlobeSceneCanvas.vue`
   - Globe-specific Three.js scene
   - Mounts `three-globe`, OrbitControls, lighting, resize handling, and cleanup
+- `components/globe/NarrationOverlay.vue`
+  - Story narration UI overlay with keyboard (→ / ←) and swipe gesture navigation
 - `composables/globeConfig.ts`
   - Typed globe scene tuning values
+- `composables/useSwipe.ts`
+  - Touch gesture composable for swipe detection (used for story navigation on mobile)
 - `data/globe/countries.geo.json`
   - Natural Earth Admin 0 country polygons used as the first globe data layer
 - `public/globe/earth-daymap-solarsystemscope-2k.jpg`
@@ -315,7 +319,7 @@ Claude (MCP client)
                       └─ renders scenes reactively
 ```
 
-The globe polls `public/story/current.json` every 3 seconds. When a new story appears, it loads the first scene. The user advances scenes with **→ / Space** and goes back with **←**.
+The globe polls `public/story/current.json` every 3 seconds. When a new story appears, it loads the first scene. Users navigate scenes with **→ / Space** (keyboard) or **swipe left/right** (mobile) to go forward/backward.
 
 ### MCP server setup
 

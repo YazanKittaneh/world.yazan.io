@@ -1,20 +1,49 @@
 {
-  "title": "The 2026 Iran War — Global Cascading Effects",
+  "title": "The 2026 Iran War — A Global Cascade",
   "scenes": [
     {
-      "narration": "February 28, 2026. The United States and Israel launch strikes on Iran — dubbed Operation Epic Fury. Within hours, Iran closes the Strait of Hormuz, shutting off 20% of the world's oil supply and one-third of global fertilizer shipments.",
+      "narration": "January 2026. Backchannel negotiations between Washington and Tehran are collapsing. The Geneva talks — the last diplomatic thread — snap over uranium enrichment limits. The window for a deal closes.",
       "highlights": [
         {
+          "iso": "US",
+          "color": "#2980b9"
+        },
+        {
           "iso": "IR",
+          "color": "#7a4e08"
+        },
+        {
+          "iso": "CH",
+          "color": "#5a6a7a"
+        }
+      ],
+      "arcs": [
+        {
+          "from": "US",
+          "to": "CH",
+          "color": "#2980b9"
+        },
+        {
+          "from": "IR",
+          "to": "CH",
+          "color": "#7a4e08"
+        }
+      ]
+    },
+    {
+      "narration": "February 28, 2026. Operation Epic Fury. U.S. and Israeli forces launch simultaneous strikes on Iranian nuclear facilities, missile sites, and command infrastructure. The war begins before dawn.",
+      "highlights": [
+        {
+          "iso": "US",
           "color": "#c0392b"
         },
         {
           "iso": "IL",
-          "color": "#2980b9"
+          "color": "#c0392b"
         },
         {
-          "iso": "US",
-          "color": "#2980b9"
+          "iso": "IR",
+          "color": "#8b0000"
         }
       ],
       "arcs": [
@@ -26,46 +55,105 @@
         {
           "from": "IL",
           "to": "IR",
-          "color": "#e8a020"
+          "color": "#e74c3c"
         }
       ]
     },
     {
-      "narration": "The Strait of Hormuz goes dark. Gulf producers — Saudi Arabia, UAE, Kuwait, Iraq — lose their export route. Oil production collapses by 10 million barrels per day. Brent crude surges from $64 to $119.50 a barrel in days. The IEA calls it the largest supply disruption in oil market history.",
+      "narration": "Within hours of the first strikes, Iran closes the Strait of Hormuz. 20% of the world's oil — 20 million barrels per day — stops moving. One-third of global fertilizer shipments are trapped. The IEA calls it the largest supply disruption in oil market history.",
       "highlights": [
         {
           "iso": "IR",
           "color": "#c0392b"
         },
         {
-          "iso": "SA",
+          "iso": "OM",
           "color": "#e8a020"
         },
         {
           "iso": "AE",
           "color": "#e8a020"
-        },
-        {
-          "iso": "KW",
-          "color": "#e8a020"
-        },
-        {
-          "iso": "IQ",
-          "color": "#e8a020"
-        },
-        {
-          "iso": "QA",
-          "color": "#e8a020"
         }
       ]
     },
     {
-      "narration": "Qatar declares force majeure on all LNG exports. Asia — which receives 75% of Gulf oil and 59% of Gulf LNG — faces an acute energy emergency. China, India, Japan, and South Korea scramble for alternative supply. Four-day work weeks and air conditioning bans are reported in parts of Asia.",
+      "narration": "The Gulf producers go dark. Saudi Arabia, UAE, Kuwait, Iraq, and Qatar lose their primary export route. Storage fills. Tankers wait at anchor. Gulf production collapses by 10 million barrels per day within two weeks.",
+      "highlights": [
+        {
+          "iso": "SA",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "AE",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "KW",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "IQ",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "QA",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "IR",
+          "color": "#8b0000"
+        }
+      ]
+    },
+    {
+      "narration": "Brent crude surges from $64 to $119.50 a barrel in days — the sharpest spike since 1973. QatarEnergy declares force majeure on all LNG exports. Natural gas prices in Europe rise 75% in a single week.",
       "highlights": [
         {
           "iso": "QA",
           "color": "#c0392b"
         },
+        {
+          "iso": "GB",
+          "color": "#e8a020"
+        },
+        {
+          "iso": "DE",
+          "color": "#e8a020"
+        },
+        {
+          "iso": "FR",
+          "color": "#e8a020"
+        },
+        {
+          "iso": "IT",
+          "color": "#e8a020"
+        },
+        {
+          "iso": "PL",
+          "color": "#e8a020"
+        }
+      ],
+      "arcs": [
+        {
+          "from": "QA",
+          "to": "GB",
+          "color": "#c0392b"
+        },
+        {
+          "from": "QA",
+          "to": "DE",
+          "color": "#c0392b"
+        },
+        {
+          "from": "QA",
+          "to": "IT",
+          "color": "#c0392b"
+        }
+      ]
+    },
+    {
+      "narration": "Asia absorbs the deepest shock. China, India, Japan, and South Korea together receive 75% of Gulf oil and 59% of Gulf LNG. With supply severed, parts of Asia impose four-day work weeks and ban air conditioning use.",
+      "highlights": [
         {
           "iso": "CN",
           "color": "#e8a020"
@@ -76,38 +164,46 @@
         },
         {
           "iso": "JP",
-          "color": "#e8a020"
+          "color": "#c0392b"
         },
         {
           "iso": "KR",
-          "color": "#e8a020"
+          "color": "#c0392b"
+        },
+        {
+          "iso": "SG",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "TW",
+          "color": "#c0392b"
         }
       ],
       "arcs": [
         {
-          "from": "QA",
+          "from": "SA",
           "to": "CN",
           "color": "#c0392b"
         },
         {
-          "from": "QA",
+          "from": "SA",
           "to": "JP",
           "color": "#c0392b"
         },
         {
-          "from": "QA",
+          "from": "SA",
           "to": "KR",
           "color": "#c0392b"
         },
         {
           "from": "QA",
-          "to": "IN",
+          "to": "SG",
           "color": "#c0392b"
         }
       ]
     },
     {
-      "narration": "Iran selectively allows Chinese tankers to transit — but charges a toll. Yuan-settled payments become the access condition. China secures energy while the US and its allies are locked out. A new fracture in the global energy order is formalized in a single policy move.",
+      "narration": "Iran makes a calculated asymmetric move: it selectively allows Chinese tankers to transit the Strait — for a price. Yuan-settled payments become the access condition. China secures energy; U.S. allies are locked out. A new fracture in the global energy order is written in a single decree.",
       "highlights": [
         {
           "iso": "IR",
@@ -122,19 +218,24 @@
           "color": "#c0392b"
         },
         {
-          "iso": "AU",
-          "color": "#c0392b"
-        },
-        {
-          "iso": "GB",
-          "color": "#c0392b"
-        },
-        {
           "iso": "JP",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "KR",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "AU",
           "color": "#c0392b"
         }
       ],
       "arcs": [
+        {
+          "from": "CN",
+          "to": "IR",
+          "color": "#27ae60"
+        },
         {
           "from": "IR",
           "to": "CN",
@@ -143,16 +244,36 @@
       ]
     },
     {
-      "narration": "The war's humanitarian toll: a U.S. strike on the Shajareh Tayyiba elementary school in Minab, Iran kills at least 168 children. In Lamerd, teenagers are killed in a sports hall strike. 3.2 million Iranians are displaced. Families spend Ramadan nights at their children's graves.",
+      "narration": "February 28, opening hours of the war. A U.S. strike hits the Shajareh Tayyiba elementary school in Minab, southern Iran. At least 168 children are killed — most of them girls aged 7 to 12. Hours later, a sports hall in Lamerd is struck, killing teenage girls at training.",
       "highlights": [
         {
           "iso": "IR",
-          "color": "#c0392b"
+          "color": "#8b0000"
         }
       ]
     },
     {
-      "narration": "Israel escalates. It assassinates Basij commander Gholamreza Soleimani and Supreme National Security Council chief Ali Larijani on the same day. When Supreme Leader Khamenei is killed, his son Mojtaba is named successor — who immediately declares the Hormuz closure official state policy.",
+      "narration": "By Week 2, Israel launches an assassination campaign. Ali Larijani — head of Iran's Supreme National Security Council — is killed. On the same day, Basij commander Gholamreza Soleimani is assassinated. Israel says the strikes are designed to provoke an uprising. Iran's government vows to fight to the end.",
+      "highlights": [
+        {
+          "iso": "IL",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "IR",
+          "color": "#8b0000"
+        }
+      ],
+      "arcs": [
+        {
+          "from": "IL",
+          "to": "IR",
+          "color": "#e74c3c"
+        }
+      ]
+    },
+    {
+      "narration": "Supreme Leader Khamenei is killed in a strike on Tehran. His son Mojtaba is rapidly named successor. In his first public statement as Supreme Leader, Mojtaba declares the Hormuz closure must continue as 'a tool to pressure the enemy.' The strait closure is now official state policy — not a battlefield side effect.",
       "highlights": [
         {
           "iso": "IR",
@@ -161,18 +282,15 @@
         {
           "iso": "IL",
           "color": "#e8a020"
-        }
-      ],
-      "arcs": [
+        },
         {
-          "from": "IL",
-          "to": "IR",
-          "color": "#c0392b"
+          "iso": "US",
+          "color": "#e8a020"
         }
       ]
     },
     {
-      "narration": "Iran strikes back across nine countries. Bahrain, Iraq, Jordan, Kuwait, Oman, Qatar, Saudi Arabia, UAE, and Israel all absorb retaliatory drone and missile attacks. 18 killed including 3 U.S. servicemen. Regional infrastructure — including Oman's Salalah port fuel tanks — is hit.",
+      "narration": "Iran retaliates across nine countries simultaneously. Drone and missile strikes hit Bahrain, Iraq, Jordan, Kuwait, Oman, Qatar, Saudi Arabia, the UAE, and Israel. Oman's Salalah port fuel tanks are struck. 18 are killed, including 3 U.S. servicemen. Bahrain's government deploys foreign riot police to suppress domestic unrest.",
       "highlights": [
         {
           "iso": "BH",
@@ -224,18 +342,47 @@
         },
         {
           "from": "IR",
+          "to": "AE",
+          "color": "#c0392b"
+        },
+        {
+          "from": "IR",
           "to": "IL",
           "color": "#c0392b"
         },
         {
           "from": "IR",
-          "to": "AE",
+          "to": "IQ",
           "color": "#c0392b"
         }
       ]
     },
     {
-      "narration": "The fertilizer shock hits the Northern Hemisphere just as spring planting begins. One-third of the world's fertilizer transits Hormuz. In the U.S., ammonia prices are up 41% and urea up 21%. Illinois corn and soybean farmers cannot get suppliers to commit to a nitrogen price.",
+      "narration": "Lebanon re-enters the war. Hezbollah launches a major rocket barrage into northern Israel. Israel issues sweeping displacement orders south of the Zahrani River and kills dozens in Lebanese strikes. Spain permanently withdraws its ambassador to Israel. The conflict spreads its third front.",
+      "highlights": [
+        {
+          "iso": "LB",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "IL",
+          "color": "#e8a020"
+        },
+        {
+          "iso": "ES",
+          "color": "#5a6a7a"
+        }
+      ],
+      "arcs": [
+        {
+          "from": "LB",
+          "to": "IL",
+          "color": "#c0392b"
+        }
+      ]
+    },
+    {
+      "narration": "The fertilizer shock arrives just as Northern Hemisphere spring planting begins. One-third of the world's fertilizer transited Hormuz. U.S. ammonia prices are up 41%, urea up 21%. Illinois farmers cannot get nitrogen suppliers to commit to a price. The fertilizer price index surges 31% in 28 days.",
       "highlights": [
         {
           "iso": "US",
@@ -250,7 +397,7 @@
           "color": "#c0392b"
         },
         {
-          "iso": "IR",
+          "iso": "AE",
           "color": "#c0392b"
         }
       ],
@@ -264,11 +411,16 @@
           "from": "QA",
           "to": "US",
           "color": "#c0392b"
+        },
+        {
+          "from": "AE",
+          "to": "US",
+          "color": "#c0392b"
         }
       ]
     },
     {
-      "narration": "Brazil — responsible for 60% of global soybean exports — depends on Hormuz for nearly half its fertilizer. If nitrogen supply collapses, Brazilian crop yields fall. Global food prices face a second shock wave months after the initial energy spike.",
+      "narration": "Brazil sits at the end of the supply chain but absorbs the full force. It produces 60% of global soybean exports and depends on Hormuz for nearly half its fertilizer. If nitrogen collapses, Brazilian yields fall. Global food prices face a second shock wave in Q3 2026 — months after the energy spike.",
       "highlights": [
         {
           "iso": "BR",
@@ -285,89 +437,19 @@
       ],
       "arcs": [
         {
-          "from": "QA",
-          "to": "BR",
-          "color": "#c0392b"
-        },
-        {
           "from": "SA",
           "to": "BR",
           "color": "#c0392b"
-        }
-      ]
-    },
-    {
-      "narration": "Australia faces a unique crisis. With only 50–60 days of liquid fuel reserves, no domestic refining capacity outside Brisbane and Geelong, and AUKUS obligations stripping Indo-Pacific naval assets to the Gulf — Australia is caught between its U.S. alliance and its dependence on Chinese trade.",
-      "highlights": [
-        {
-          "iso": "AU",
-          "color": "#e8a020"
         },
         {
-          "iso": "US",
-          "color": "#2980b9"
-        },
-        {
-          "iso": "CN",
-          "color": "#27ae60"
-        }
-      ],
-      "arcs": [
-        {
-          "from": "AU",
-          "to": "US",
-          "color": "#2980b9"
-        },
-        {
-          "from": "AU",
-          "to": "CN",
-          "color": "#27ae60"
-        }
-      ]
-    },
-    {
-      "narration": "Qantas and Virgin Australia raise fares as jet fuel costs surge 150% in two weeks. 22 Qatar Airways codeshare flights to Doha are cancelled, severing Australia's primary Middle East air corridor. International visitor arrivals to Australia fall 8.2% in February — before the war even escalated.",
-      "highlights": [
-        {
-          "iso": "AU",
-          "color": "#c0392b"
-        },
-        {
-          "iso": "QA",
-          "color": "#e8a020"
-        }
-      ],
-      "arcs": [
-        {
-          "from": "AU",
-          "to": "QA",
+          "from": "QA",
+          "to": "BR",
           "color": "#c0392b"
         }
       ]
     },
     {
-      "narration": "Europe's natural gas benchmark rises 75% since the war began. Russia — already isolated by Ukraine sanctions — watches its oil export revenues fall despite the price spike, as its customers scramble for non-Gulf alternatives. Moscow begins weighing 10% budget cuts.",
-      "highlights": [
-        {
-          "iso": "RU",
-          "color": "#e8a020"
-        },
-        {
-          "iso": "DE",
-          "color": "#e8a020"
-        },
-        {
-          "iso": "FR",
-          "color": "#e8a020"
-        },
-        {
-          "iso": "GB",
-          "color": "#e8a020"
-        }
-      ]
-    },
-    {
-      "narration": "Sudan and Somalia face food emergencies. Sudan imports 80%+ of its wheat; Somalia has already seen food prices rise 20% as a result of the war. The WFP warns the war could force 45 million more people into acute food insecurity globally — concentrated in sub-Saharan Africa and South Asia.",
+      "narration": "Sudan and Somalia face immediate food emergencies. Sudan imports 80%+ of its wheat through routes now disrupted. Somalia has already seen food prices rise 20%. The WFP warns 45 million more people could be forced into acute food insecurity if the war continues. Sub-Saharan Africa and South Asia are the most exposed.",
       "highlights": [
         {
           "iso": "SD",
@@ -383,7 +465,7 @@
         },
         {
           "iso": "YE",
-          "color": "#e8a020"
+          "color": "#c0392b"
         },
         {
           "iso": "PK",
@@ -396,7 +478,145 @@
       ]
     },
     {
-      "narration": "Back in Washington, the War Powers Resolution fails 212-219 in the House on March 5. A new WPR vote is expected this week. Democrats are divided: some want the war ended, others quietly see electoral advantage in letting Trump own a failing war into the 2026 midterms.",
+      "narration": "Australia faces the most structurally exposed position of any Western nation. It holds only 50–60 days of liquid fuel reserves — well below the IEA's 90-day requirement. It imports 90% of its refined petroleum. Its two operating refineries, Ampol Brisbane and Viva Geelong, are the only domestic buffer.",
+      "highlights": [
+        {
+          "iso": "AU",
+          "color": "#e8a020"
+        }
+      ],
+      "arcs": [
+        {
+          "from": "SA",
+          "to": "AU",
+          "color": "#c0392b"
+        },
+        {
+          "from": "SG",
+          "to": "AU",
+          "color": "#c0392b"
+        }
+      ]
+    },
+    {
+      "narration": "Australia's AUKUS alliance is an active liability. Its naval assets are committed to U.S. operations in the Indo-Pacific and Persian Gulf — the very theatre that has cut off Australia's fuel supply. Australia is paying the cost of the war it cannot afford to oppose and cannot afford to support.",
+      "highlights": [
+        {
+          "iso": "AU",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "US",
+          "color": "#2980b9"
+        },
+        {
+          "iso": "GB",
+          "color": "#2980b9"
+        },
+        {
+          "iso": "CN",
+          "color": "#27ae60"
+        }
+      ],
+      "arcs": [
+        {
+          "from": "AU",
+          "to": "US",
+          "color": "#2980b9"
+        },
+        {
+          "from": "AU",
+          "to": "CN",
+          "color": "#e8a020"
+        }
+      ]
+    },
+    {
+      "narration": "Qantas raises international fares as jet fuel surges 150% in two weeks — from $85 to $150–200/barrel. Virgin Australia cancels 22 Qatar Airways codeshare flights to Doha. Australia's only Middle East air corridor is severed. International arrivals had already fallen 8.2% in February.",
+      "highlights": [
+        {
+          "iso": "AU",
+          "color": "#e8a020"
+        },
+        {
+          "iso": "QA",
+          "color": "#c0392b"
+        }
+      ],
+      "arcs": [
+        {
+          "from": "AU",
+          "to": "QA",
+          "color": "#c0392b"
+        },
+        {
+          "from": "AU",
+          "to": "GB",
+          "color": "#e8a020"
+        },
+        {
+          "from": "AU",
+          "to": "SG",
+          "color": "#e8a020"
+        }
+      ]
+    },
+    {
+      "narration": "Russia watches from the sidelines. Isolated by Ukraine sanctions, it sees oil prices spike — but its own customer base is scrambling for non-Gulf alternatives that bypass Moscow too. Russia's oil export revenues fall despite the price spike. Moscow weighs 10% budget cuts.",
+      "highlights": [
+        {
+          "iso": "RU",
+          "color": "#7a4e08"
+        },
+        {
+          "iso": "CN",
+          "color": "#27ae60"
+        },
+        {
+          "iso": "IN",
+          "color": "#27ae60"
+        }
+      ],
+      "arcs": [
+        {
+          "from": "RU",
+          "to": "CN",
+          "color": "#27ae60"
+        },
+        {
+          "from": "RU",
+          "to": "IN",
+          "color": "#27ae60"
+        }
+      ]
+    },
+    {
+      "narration": "The clear winners: non-Gulf oil producers. The U.S. (ExxonMobil, Chevron), Canada, Norway, and Australia's Santos and Woodside are generating windfall revenues. American refiners — Valero, Marathon, Phillips 66 — are capturing record crack spreads. The energy sector's gain is everyone else's cost.",
+      "highlights": [
+        {
+          "iso": "US",
+          "color": "#27ae60"
+        },
+        {
+          "iso": "CA",
+          "color": "#27ae60"
+        },
+        {
+          "iso": "NO",
+          "color": "#27ae60"
+        },
+        {
+          "iso": "AU",
+          "color": "#27ae60"
+        },
+        {
+          "iso": "MX",
+          "color": "#27ae60"
+        }
+      ]
+    },
+    {
+      "narration": "In Washington, the War Powers Resolution fails 212 to 219 in the House on March 5. A new WPR vote is expected this week. Democrats are split: some want the war ended; others quietly see electoral advantage in letting Trump own a failing conflict into the 2026 midterms.",
       "highlights": [
         {
           "iso": "US",
@@ -405,19 +625,52 @@
       ]
     },
     {
-      "narration": "Week 4. The war grinds on with no ceasefire. Iran denies any negotiations. Chicago gas averages $4.46/gallon. The IEA has released a record 400 million barrels from strategic reserves — but calls it 'not the solution.' The world waits to see whether diplomacy or force ends this first.",
+      "narration": "Trump claims Iran is calling to negotiate. Iran calls it 'a huge lie.' Senior Iranian officials say no talks are possible until a new Supreme Leader formally consolidates power. Mojtaba has already spoken: the Strait stays closed. Diplomacy is frozen.",
       "highlights": [
-        {
-          "iso": "IR",
-          "color": "#c0392b"
-        },
         {
           "iso": "US",
           "color": "#2980b9"
         },
         {
-          "iso": "IL",
+          "iso": "IR",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "CH",
+          "color": "#5a6a7a"
+        },
+        {
+          "iso": "TR",
+          "color": "#5a6a7a"
+        }
+      ],
+      "arcs": [
+        {
+          "from": "US",
+          "to": "TR",
           "color": "#2980b9"
+        },
+        {
+          "from": "IR",
+          "to": "TR",
+          "color": "#e8a020"
+        }
+      ]
+    },
+    {
+      "narration": "Week 4. Day 25. The IEA has released a record 400 million barrels from strategic reserves — and calls it 'not the solution.' 3.2 million Iranians are displaced. Chicago gas averages $4.46/gallon. Australian fuel supplies are secure only through late April. The world is burning through its buffers.",
+      "highlights": [
+        {
+          "iso": "IR",
+          "color": "#8b0000"
+        },
+        {
+          "iso": "US",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "IL",
+          "color": "#e8a020"
         },
         {
           "iso": "AU",
@@ -429,11 +682,11 @@
         },
         {
           "iso": "SA",
-          "color": "#e8a020"
+          "color": "#c0392b"
         },
         {
-          "iso": "BR",
-          "color": "#e8a020"
+          "iso": "QA",
+          "color": "#c0392b"
         }
       ],
       "arcs": [
@@ -448,14 +701,9 @@
           "color": "#27ae60"
         },
         {
-          "from": "SA",
-          "to": "US",
-          "color": "#e8a020"
-        },
-        {
-          "from": "QA",
-          "to": "JP",
-          "color": "#c0392b"
+          "from": "CN",
+          "to": "AU",
+          "color": "#27ae60"
         }
       ]
     }

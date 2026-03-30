@@ -6,7 +6,8 @@
     "dev": "nuxt dev",
     "build": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "node scripts/patch-vue-router.mjs"
+    "postinstall": "node scripts/patch-vue-router.mjs",
+    "deploy": "nuxt generate && wrangler pages deploy .output/public --project-name world-yazan-io --branch main"
   },
   "dependencies": {
     "@nuxtjs/prismic": "^3.3.0",

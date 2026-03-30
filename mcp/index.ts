@@ -31,7 +31,13 @@ const TELL_STORY_SCHEMA = {
               properties: {
                 from: { type: 'string', description: 'ISO 3166-1 alpha-2 code' },
                 to: { type: 'string', description: 'ISO 3166-1 alpha-2 code' },
-                color: { type: 'string', description: 'CSS color string' }
+                color: { type: 'string', description: 'CSS color string' },
+                thickness: { type: 'number', description: 'Line width multiplier (0.1 to 5.0, default: 1.0)' },
+                speed: { type: 'number', description: 'Animation duration in milliseconds (default: 2000)' },
+                label: { type: 'string', description: 'Label shown on hover or in legend' },
+                waypoints: { type: 'array', items: { type: 'string' }, description: 'Additional ISO codes for multi-hop routes' },
+                directional: { type: 'boolean', description: 'Show arrowhead indicating direction (default: false)' },
+                style: { type: 'string', enum: ['dashed', 'solid', 'dotted'], description: 'Line style (default: dashed)' }
               },
               required: ['from', 'to', 'color']
             }
