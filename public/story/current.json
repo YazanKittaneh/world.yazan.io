@@ -77,6 +77,55 @@
       ]
     },
     {
+      "sceneTitle": "The Chokepoint",
+      "narration": "The Strait of Hormuz. Just 21 nautical miles wide at its narrowest point. To the north: Iran's mountainous coast and missile batteries. To the south: Oman and the UAE. This single passage carries 21 million barrels of oil daily — one-fifth of global consumption. Tankers squeeze through shipping lanes just two miles wide, bordered by Iranian waters on one side and Omani waters on the other. A single missile, a single mine, a single sunken hull could close it for weeks.",
+      "highlights": [
+        {
+          "iso": "IR",
+          "color": "#c0392b"
+        },
+        {
+          "iso": "OM",
+          "color": "#2980b9"
+        },
+        {
+          "iso": "AE",
+          "color": "#2980b9"
+        }
+      ],
+      "camera": {
+        "lat": 26.5,
+        "lng": 56.5,
+        "distance": 120
+      },
+      "markers": [
+        {
+          "lat": 26.5,
+          "lng": 56.4,
+          "label": "Strait of Hormuz",
+          "color": "#e74c3c"
+        },
+        {
+          "lat": 26.8,
+          "lng": 56.1,
+          "label": "Iran Coast",
+          "color": "#c0392b"
+        },
+        {
+          "lat": 25.2,
+          "lng": 56.4,
+          "label": "Oman Coast",
+          "color": "#2980b9"
+        },
+        {
+          "lat": 26.0,
+          "lng": 56.2,
+          "label": "Shipping Lane",
+          "color": "#27ae60"
+        }
+      ]
+    },
+    {
       "narration": "The Gulf producers go dark. Saudi Arabia, UAE, Kuwait, Iraq, and Qatar lose their primary export route. Storage fills. Tankers wait at anchor. Gulf production collapses by 10 million barrels per day within two weeks.",
       "highlights": [
         {

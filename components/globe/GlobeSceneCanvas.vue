@@ -290,6 +290,16 @@ onMounted(async () => {
     .arcDashLength((d: any) => d.dashLength ?? 0.4)
     .arcDashGap((d: any) => d.dashGap ?? 0.2)
     .arcDashAnimateTime((d: any) => d.animateTime ?? 2000)
+    .labelsData([])
+    .labelLat('lat')
+    .labelLng('lng')
+    .labelText('text')
+    .labelColor('color')
+    .labelAltitude(0.02)
+    .labelSize(1.2)
+    .labelDotRadius(0.3)
+    .labelIncludeDot(true)
+    .labelDotOrientation('bottom')
 
   globe.rotation.y = -Math.PI / 2
   globeObject = globe
@@ -340,6 +350,15 @@ onMounted(async () => {
     }
 
     globeInstance.arcsData(arcsData)
+
+    // Update labels/markers
+    const labelsData = (sc?.markers ?? []).map((marker: any) => ({
+      lat: marker.lat,
+      lng: marker.lng,
+      text: marker.label,
+      color: marker.color
+    }))
+    globeInstance.labelsData(labelsData)
 
     // Re-render polygons to pick up new highlight colors
     globeInstance.polygonsData([...polygonFeatures])
