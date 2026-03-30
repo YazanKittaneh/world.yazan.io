@@ -36,16 +36,17 @@ const polygonFeatures = (countries.features as CountryFeature[]).filter(
   country => country.properties?.ISO_A2 !== 'AQ' && country.properties?.NAME !== 'Antarctica'
 )
 
-// Convert lat/lng to a world-space unit direction, accounting for globe.rotation.y = -PI/2
-// R_y(-PI/2) maps local (lx, ly, lz) → world (-lz, ly, lx)
-// Note: three-globe uses (sin lng, cos lng) convention instead of (cos lng, sin lng)
+// Convert lat/lng to a world-space unit direction
+// Uses three-globe's polar2Cartesian convention:
+// phi = 90° - lat, theta = 90° - lng
+// x = sin(phi) * cos(theta), y = cos(phi), z = sin(phi) * sin(theta)
 function latLngToWorldDir(lat: number, lng: number): THREE.Vector3 {
-  const latR = lat * THREE.MathUtils.DEG2RAD
-  const lngR = lng * THREE.MathUtils.DEG2RAD
-  const lx = Math.cos(latR) * Math.sin(lngR)
-  const ly = Math.sin(latR)
-  const lz = Math.cos(latR) * Math.cos(lngR)
-  return new THREE.Vector3(-lz, ly, lx)
+  const phi = (90 - lat) * THREE.MathUtils.DEG2RAD
+  const theta = (90 - lng) * THREE.MathUtils.DEG2RAD
+  const x = Math.sin(phi) * Math.cos(theta)
+  const y = Math.cos(phi)
+  const z = Math.sin(phi) * Math.sin(theta)
+  return new THREE.Vector3(x, y, z)
 }
 
 function animateCameraToScene() {
