@@ -55,8 +55,8 @@ let animatedObjects: { mesh: THREE.Mesh; update: (delta: number) => void }[] = [
 
 function manageCustomOverlay(sc: any) {
   // Remove existing overlay
-  if (customOverlayGroup) {
-    globe?.remove(customOverlayGroup)
+  if (customOverlayGroup && globeObject) {
+    globeObject.remove(customOverlayGroup)
     customOverlayGroup.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         child.geometry.dispose()
@@ -159,7 +159,9 @@ function manageCustomOverlay(sc: any) {
   
   customOverlayGroup!.add(ring)
 
-  globe?.add(customOverlayGroup)
+  if (globeObject) {
+    globeObject.add(customOverlayGroup)
+  }
 }
 
 function animateCameraToScene() {
