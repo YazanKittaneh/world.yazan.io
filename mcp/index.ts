@@ -20,9 +20,34 @@ const TELL_STORY_SCHEMA = {
       items: {
         type: 'object',
         properties: {
+          sceneId: {
+            type: 'string',
+            description: 'Stable identifier for this scene'
+          },
           narration: {
             type: 'string',
             description: 'Text shown on screen for this scene'
+          },
+          sceneTitle: {
+            type: 'string',
+            description: 'Optional heading shown above narration'
+          },
+          renderMode: {
+            type: 'string',
+            enum: ['globe', 'local'],
+            description: 'Whether this scene should use the globe renderer or a dedicated local renderer'
+          },
+          rendererKey: {
+            type: 'string',
+            description: 'Renderer identifier for local scenes (for example, hormuz-cinematic)'
+          },
+          rendererProps: {
+            type: 'object',
+            description: 'Optional renderer-specific configuration payload'
+          },
+          duration: {
+            type: 'number',
+            description: 'Milliseconds before auto-advancing to the next scene'
           },
           arcs: {
             type: 'array',
@@ -52,6 +77,28 @@ const TELL_STORY_SCHEMA = {
               },
               required: ['iso', 'color']
             }
+          },
+          markers: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                lat: { type: 'number', description: 'Latitude in degrees' },
+                lng: { type: 'number', description: 'Longitude in degrees' },
+                label: { type: 'string', description: 'Label shown for the marker' },
+                color: { type: 'string', description: 'CSS color string' }
+              },
+              required: ['lat', 'lng', 'label', 'color']
+            }
+          },
+          camera: {
+            type: 'object',
+            properties: {
+              lat: { type: 'number', description: 'Latitude in degrees' },
+              lng: { type: 'number', description: 'Longitude in degrees' },
+              distance: { type: 'number', description: 'Camera distance from scene center' }
+            },
+            required: ['lat', 'lng']
           }
         },
         required: ['narration']
@@ -71,7 +118,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     {
       name: 'tell_story',
       description:
-        'Load a visual story onto the globe. Each scene shows narration text alongside globe effects (arcs between countries, highlighted countries). The user advances manually with arrow keys (left/right) or by swiping on the narration card on mobile.',
+        'Load a visual story into the story viewer. Scenes can use the globe renderer or dedicated local cinematic renderers, alongside narration, highlights, arcs, markers, and camera overrides. The user advances manually with arrow keys (left/right) or by swiping on the narration card on mobile.',
       inputSchema: TELL_STORY_SCHEMA
     }
   ]
@@ -85,9 +132,17 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const story = request.params.arguments as {
     title?: string
     scenes: Array<{
+      sceneId?: string
       narration: string
+      sceneTitle?: string
+      renderMode?: 'globe' | 'local'
+      rendererKey?: string
+      rendererProps?: Record<string, unknown>
+      duration?: number
       arcs?: Array<{ from: string; to: string; color: string }>
       highlights?: Array<{ iso: string; color: string }>
+      markers?: Array<{ lat: number; lng: number; label: string; color: string }>
+      camera?: { lat: number; lng: number; distance?: number }
     }>
   }
 

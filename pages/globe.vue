@@ -29,7 +29,7 @@ onBeforeUnmount(() => {
     </div>
 
     <ClientOnly>
-      <GlobeSceneCanvas />
+      <StorySceneRenderer />
       <NarrationOverlay />
     </ClientOnly>
   </main>

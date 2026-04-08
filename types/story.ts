@@ -31,7 +31,10 @@ export interface CameraOverride {
   distance?: number  // Three.js units; globe radius = 100, normal view ≈ 260
 }
 
+export type RenderMode = 'globe' | 'local'
+
 export interface Scene {
+  sceneId?: string
   narration: string
   sceneTitle?: string
   duration?: number  // ms before auto-advancing; omit or 0 = manual
@@ -39,6 +42,10 @@ export interface Scene {
   highlights?: HighlightDef[]
   markers?: MarkerDef[]
   camera?: CameraOverride
+  // Renderer selection metadata
+  renderMode?: RenderMode  // 'globe' (default) or 'local' for dedicated scene renderers
+  rendererKey?: string     // Identifies which local renderer to use (e.g., 'hormuz')
+  rendererProps?: Record<string, unknown>
 }
 
 export interface Story {

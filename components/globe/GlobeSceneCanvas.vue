@@ -49,121 +49,6 @@ function latLngToWorldDir(lat: number, lng: number): THREE.Vector3 {
   return new THREE.Vector3(x, y, z)
 }
 
-// Custom 3D overlay for detailed scenes
-let customOverlayGroup: THREE.Group | null = null
-let animatedObjects: { mesh: THREE.Mesh; update: (delta: number) => void }[] = []
-
-function manageCustomOverlay(sc: any) {
-  // Remove existing overlay
-  if (customOverlayGroup && globeObject) {
-    globeObject.remove(customOverlayGroup)
-    customOverlayGroup.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        child.geometry.dispose()
-        const materials = Array.isArray(child.material) ? child.material : [child.material]
-        materials.forEach(m => m.dispose())
-      }
-    })
-    customOverlayGroup = null
-    animatedObjects = []
-  }
-
-  // Only create overlay for Hormuz scene
-  if (sc?.sceneTitle !== 'The Chokepoint') return
-
-  customOverlayGroup = new THREE.Group()
-  
-  // Tankers navigating through the strait
-  const tankerGeo = new THREE.CapsuleGeometry(0.4, 1.2, 4, 8)
-  const tankerMat = new THREE.MeshStandardMaterial({ 
-    color: 0x444444,
-    roughness: 0.3,
-    metalness: 0.7
-  })
-
-  const tankerPositions = [
-    { lat: 26.6, lng: 56.3, progress: 0.2 },
-    { lat: 26.5, lng: 56.4, progress: 0.5 },
-    { lat: 26.4, lng: 56.5, progress: 0.8 },
-    { lat: 26.7, lng: 56.2, progress: 0.1 }
-  ]
-
-  tankerPositions.forEach((pos, i) => {
-    const tanker = new THREE.Mesh(tankerGeo, tankerMat)
-    const pos3D = latLngToWorldDir(pos.lat, pos.lng).multiplyScalar(100.5)
-    tanker.position.copy(pos3D)
-    tanker.lookAt(0, 0, 0)
-    tanker.rotateX(Math.PI / 2)
-    tanker.userData = { 
-      isTanker: true, 
-      baseLat: pos.lat, 
-      baseLng: pos.lng,
-      offset: i * 1000,
-      speed: 0.00005 + Math.random() * 0.00003
-    }
-    
-    animatedObjects.push({
-      mesh: tanker,
-      update: (delta: number) => {
-        // Subtle bobbing motion
-        tanker.position.y += Math.sin(Date.now() * 0.001 + tanker.userData.offset) * 0.01
-      }
-    })
-    
-    customOverlayGroup!.add(tanker)
-  })
-
-  // Missile batteries on Iran coast
-  const batteryGeo = new THREE.ConeGeometry(0.6, 1.5, 6)
-  const batteryMat = new THREE.MeshStandardMaterial({ 
-    color: 0xc0392b,
-    roughness: 0.8 
-  })
-
-  const batteryPositions = [
-    { lat: 26.85, lng: 56.15 },
-    { lat: 26.9, lng: 56.1 },
-    { lat: 27.0, lng: 56.05 }
-  ]
-
-  batteryPositions.forEach(pos => {
-    const battery = new THREE.Mesh(batteryGeo, batteryMat)
-    const pos3D = latLngToWorldDir(pos.lat, pos.lng).multiplyScalar(100.3)
-    battery.position.copy(pos3D)
-    battery.lookAt(0, 0, 0)
-    customOverlayGroup!.add(battery)
-  })
-
-  // Radar/range circles
-  const ringGeo = new THREE.RingGeometry(2, 2.2, 32)
-  const ringMat = new THREE.MeshBasicMaterial({ 
-    color: 0xc0392b, 
-    side: THREE.DoubleSide,
-    transparent: true,
-    opacity: 0.3
-  })
-  
-  const ring = new THREE.Mesh(ringGeo, ringMat)
-  const ringPos = latLngToWorldDir(26.85, 56.15).multiplyScalar(100.2)
-  ring.position.copy(ringPos)
-  ring.lookAt(0, 0, 0)
-  
-  animatedObjects.push({
-    mesh: ring,
-    update: () => {
-      const scale = 1 + Math.sin(Date.now() * 0.002) * 0.2
-      ring.scale.setScalar(scale)
-      ring.material.opacity = 0.3 - (scale - 1) * 0.3
-    }
-  })
-  
-  customOverlayGroup!.add(ring)
-
-  if (globeObject) {
-    globeObject.add(customOverlayGroup)
-  }
-}
-
 function animateCameraToScene() {
   if (!camera || !currentScene.value) return
   const sc = currentScene.value
@@ -242,9 +127,6 @@ const renderScene = () => {
       isAnimatingCamera = false
     }
   }
-
-  // Update animated custom overlay objects
-  animatedObjects.forEach(obj => obj.update(0.016))
 
   controls?.update()
   renderer.render(scene, camera)
@@ -478,9 +360,6 @@ onMounted(async () => {
 
     // Re-render polygons to pick up new highlight colors
     globeInstance.polygonsData([...polygonFeatures])
-
-    // Manage custom 3D overlay objects
-    manageCustomOverlay(sc)
 
     // Animate camera to center on the scene's countries
     animateCameraToScene()

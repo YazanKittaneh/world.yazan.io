@@ -77,7 +77,10 @@
       ]
     },
     {
+      "sceneId": "hormuz-cinematic",
       "sceneTitle": "The Chokepoint",
+      "renderMode": "local",
+      "rendererKey": "hormuz-cinematic",
       "narration": "The Strait of Hormuz. Just 21 nautical miles wide at its narrowest point. To the north: Iran's mountainous coast and missile batteries. To the south: Oman and the UAE. This single passage carries 21 million barrels of oil daily — one-fifth of global consumption. Tankers squeeze through shipping lanes just two miles wide, bordered by Iranian waters on one side and Omani waters on the other. A single missile, a single mine, a single sunken hull could close it for weeks.",
       "highlights": [
         {
